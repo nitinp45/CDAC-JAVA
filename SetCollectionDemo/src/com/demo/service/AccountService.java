@@ -11,8 +11,6 @@ public interface AccountService {
 
 	Set<Account> getAll();
 
-	int withdrawAmount(String acid, int pin, double amt);
-
 	boolean depositAmount(String acid, int pin, double amt);
 
 	boolean transferfunds(String acid, String dacid, int pin, double amt);
@@ -24,5 +22,13 @@ public interface AccountService {
 	Set<Account> sortById();
 
 	List<Account> sortByName();
+
+	int withdrawAmount(String acid, int pin, double amt);
+
+	double displayBalance(String acid, int pin);
+
+	boolean modifypinbyold(String acid, int pin);
+
+	List<Account> sortName();
 
 }

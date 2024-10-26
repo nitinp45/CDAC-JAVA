@@ -21,4 +21,6 @@ public interface AccountDao {
 
 	List<Account> sortByName();
 
+	List<Account> sortNames();
+
 }

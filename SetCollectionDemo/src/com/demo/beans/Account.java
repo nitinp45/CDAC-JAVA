@@ -9,11 +9,13 @@ abstract public class Account implements Comparable<Account>{
 	private String question;
 	private String ans;
 	protected double balance;
+	
 	@Override
 	public int hashCode() {
 		System.out.println("In account hashCode : "+aname+"---"+pin);
 		return aname.hashCode()+pin;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		Account ac=(Account)obj;
@@ -21,8 +23,7 @@ abstract public class Account implements Comparable<Account>{
 		return this.aname.equals(ac.aname) && this.pin==ac.pin;
 	}
 
-	
-	
+
 	public Account(String type) {
 		super();
 		this.acid = generateId(type,null);

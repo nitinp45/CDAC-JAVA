@@ -24,12 +24,12 @@ public class TestAccount {
 		int choice=0;
 		if(role.equals("user")) {
 			do {
-			   System.out.println("1.Open new account\n2. withdraw amt\n3. deposit amount\n4. transfer funds\n");
-			   System.out.println("5.change pin\n6. check balance\n7. close account\n8. display all\n9 exit\nchoice");
+			   System.out.println("1.Open new account\n2. withdraw amt\n3. deposit amount\n4. transfer funds");
+			   System.out.println("5.change pin\n6. check balance\n7. close account\n8. display all\n9 sort by Name \n 10 exit\nchoice");
 			   choice=sc.nextInt();
 			   switch(choice) {
 			   case 1->{
-				   System.out.println("1. Saving\n 2. Current\n choice: ");
+				   System.out.println("1. Saving\n 2. Current\n3. Demat Account choice: ");
 				   int ch=sc.nextInt();
 				   boolean status=acservice.addnewAccount(ch);
 				   if(status) {
@@ -41,18 +41,19 @@ public class TestAccount {
 			   case 2->{
 				   System.out.println("enter acid");
 				   String acid=sc.next();
-				   System.out.println("enetr pin");
+				   System.out.println("enter pin");
 				   int pin=sc.nextInt();
-				   System.out.println("enter amt to withsraw");
+				   System.out.println("enter amount to withsraw");
 				   double amt=sc.nextDouble();
+			
 				   int ans=acservice.withdrawAmount(acid,pin,amt);
 				   if(ans==1) {
 					   System.out.println("withdrawal done");
 				   }else if(ans==2) {
 					   System.out.println("insuffitient balance");   
 				   }else {
-					   System.out.println("wrong credentials");
-				   }
+					   System.out.println("Invalid Credentials");
+				   }    
 				   
 			   }
 			   case 3->{
@@ -62,6 +63,7 @@ public class TestAccount {
 				   int pin=sc.nextInt();
 				   System.out.println("enter amt to deposit");
 				   double amt=sc.nextDouble();
+				  
 				   boolean status=acservice.depositAmount(acid,pin,amt);
 				   if(status) {
 					   System.out.println("deposit done");
@@ -93,25 +95,44 @@ public class TestAccount {
 			   	    System.out.println("do you want to enter old pin");
 			   		String ans=sc.next();
 			   		if(ans.equals("y")) {
-			   		     System.out.println("enetr pin");
+			   		     System.out.println("enter pin");
 			   		     int pin=sc.nextInt();
 			   		     //write code for changing the pin
+			   		     boolean status=acservice.modifypinbyold(acid,pin);
+			   		     if(status) {
+			   		    	 System.out.println("Pin Updated Sucessfully!");
+			   		     }else {
+			   		    	 System.out.println("Invalid Credentials");
+			   		     }
 			   		}else {
 			   			 boolean status=acservice.modifypinnum(acid); 
 			   			 if(status) {
 			   				System.out.println("pin changed");
 			   			 }else {
-			   				System.out.println("cannot change pin, wrong credentials"); 
+			   				System.out.println("cannot change pin, Invalid Credentials"); 
 			   			 }
 			   		}
 			   }
-			   case 6->{ //write code to display balance
+			   case 6->{ 
+					   System.out.println("enter acid");
+					   String acid=sc.next();
+					   System.out.println("enter pin");
+					   int pin=sc.nextInt();
+					   double balance=acservice.displayBalance(acid,pin);
+					   if(balance >0)
+					   {
+						   System.out.println("Your account balance is "+balance);
+					   }
+					   else {
+						   System.out.println("Account not found");
+					   }
+					   
 				   }
 			   
 			   case 7->{
 				   System.out.println("enter acid");
 				   String acid=sc.next();
-				   System.out.println("enetr pin");
+				   System.out.println("enter pin");
 				   int pin=sc.nextInt();
 				   boolean status=acservice.removeAccountById(acid,pin);
 				   if(status) {
@@ -125,6 +146,11 @@ public class TestAccount {
 				   sac.stream().forEach(System.out::println);
 			   }
 			   case 9->{
+				   List<Account> a=acservice.sortName();
+				   a.stream().forEach(System.out::println);
+				   	
+			   }
+			   case 10->{
 				   System.out.println("thank you for visiting...");
 				   sc.close();
 			   }
@@ -149,6 +175,7 @@ public class TestAccount {
 					List<Account> aset=acservice.sortByName();
 					aset.stream().forEach(System.out::println);
 				}
+			
 				case 4->{System.out.println("thank you for visiting.....");
 				sc.close();}
 				default->{System.out.println("wrong choice");}
@@ -156,7 +183,7 @@ public class TestAccount {
 				}
 			}while(choice!=4);
 		}else {
-			System.out.println("wrong credentials");
+			System.out.println("Invalid Credentials");
 		}
 	}
 

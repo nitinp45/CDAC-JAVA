@@ -9,17 +9,19 @@ import java.util.TreeSet;
 
 import com.demo.beans.Account;
 import com.demo.beans.CurrentAccount;
+import com.demo.beans.DematAccount;
 import com.demo.beans.SavingAccount;
 
 public class AccountDaoImpl implements AccountDao {
 	static Set<Account> accset;
 	static {
 		accset=new HashSet<>();
-		accset.add(new SavingAccount("Revati",1111,"maiden name?","Revati",44444,2323));
-		accset.add(new SavingAccount("Ashutosh",2222,"birth place?","pune",34343,2211));
-		accset.add(new CurrentAccount("Atharva",1111,"favorite color?","blue",454545,20));
-		accset.add(new CurrentAccount("Atharva",2222,"favorite color?","red",474745,20));
-		Account.setCnt(4);
+		accset.add(new SavingAccount("Nitin",1111,"maiden name?","Console",44444,2323));
+		accset.add(new SavingAccount("Ketan",2222,"birth place?","Thane",34343,2211));
+		accset.add(new CurrentAccount("Om",1111,"favorite color?","Orange",454545,20));
+		accset.add(new CurrentAccount("Rohit",2222,"favorite cricketer","Virat",474745,20));
+		accset.add(new DematAccount("Omkar",1234,"favorite movie","3 idiots",10000,3443));
+		Account.setCnt(5);
 	}
 	
 
@@ -63,7 +65,7 @@ public class AccountDaoImpl implements AccountDao {
 		Account ac=findById(acid, pin);
 		return accset.remove(ac);
 		
-		//return accset.removeIf(ac->ac.getAcid().equals(acid) && ac.getPin()==pin);
+		//return accset.removeIf(ac->ac.getAcid().equals(acid) && ac.getPin()==pin);   //why not we use becz it check the whole string and if we found and delete but after deleting again it checkeing whole list
 	}
 
 
@@ -89,6 +91,22 @@ public class AccountDaoImpl implements AccountDao {
 		}
 		lst.sort(c);
 		return lst;
+	}
+
+	
+	@Override
+	public List<Account> sortNames() {
+		
+		Comparator<Account> obj=(a1,a2)->{
+			return a1.getAname().compareTo(a2.getAname());
+		};
+		List<Account> list=new ArrayList<>();
+		for(Account a:accset)
+		{
+			list.add(a);
+		}
+		list.sort(obj);
+		return list;
 	}
 
 

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.demo.beans.Account;
 import com.demo.beans.CurrentAccount;
+import com.demo.beans.DematAccount;
 import com.demo.beans.SavingAccount;
 import com.demo.dao.AccountDao;
 
@@ -41,6 +42,11 @@ public class AccountServiceImpl implements AccountService{
 				int tnum=sc.nextInt();
 				Account ac=new CurrentAccount(nm,pin,question,ans,amt,tnum);
 				return acdao.saveaccount(ac);
+			}else if(ch==3) {
+				System.out.println("Enter tpin");
+				int tpin=sc.nextInt();
+				Account ac=new DematAccount(nm,pin,question,ans,amt,tpin);
+				return acdao.saveaccount(ac);
 			}
 			return false;
 			
@@ -58,6 +64,7 @@ public class AccountServiceImpl implements AccountService{
 				return 3;
 			}
 		}
+		
 		@Override
 		public boolean depositAmount(String acid, int pin, double amt) {
 			Account ac=acdao.findById(acid,pin);
@@ -116,4 +123,31 @@ public class AccountServiceImpl implements AccountService{
 		public List<Account> sortByName() {
 			return acdao.sortByName();
 		}
+		@Override
+		public double displayBalance(String acid, int pin) {
+			Account ac=acdao.findById(acid,pin);
+			if(ac!=null)
+			{
+				return ac.getBalance();
+			}
+			return -1;
+		}
+		@Override
+		public boolean modifypinbyold(String acid, int pin) {
+			// TODO Auto-generated method stub
+			Scanner sc=new Scanner(System.in);
+			Account ac=acdao.findById(acid,pin);
+				if(ac!=null) {
+					System.out.println("Enter New pin: ");
+					int npin=sc.nextInt();
+					ac.setPin(npin);
+					return true;
+				}
+			return false;
+		}
+		@Override
+		public List<Account> sortName() {
+			return acdao.sortNames();
+		}
+		
 }
